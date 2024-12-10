@@ -25,13 +25,27 @@ spec:
               key: oauthClientSecret
         - name: WORKING_DIRECTORY
           value: {{ .Values.runner.workingDirectory | quote }}
-#      volumeMounts:
-#        - name: tmp
-#          mountPath: /tmp
-#        - name: var-run
-#          mountPath: /var/run
-#  restartPolicy: Always
-#  volumes:
-#    - name: tmp
-#    - name: docker-containers
-#    - name: var-run
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: docker-containers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+        - name: var-run
+          mountPath: /var/run
+    - name: docker-in-docker
+      image: {{ .Values.dockerImage.dind }}
+      securityContext:
+        privileged: {{ .Values.securityContext.privileged }}
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: docker-containers
+          mountPath: /var/lib/docker/containers
+        - name: var-run
+          mountPath: /var/run
+  restartPolicy: Always
+  volumes:
+    - name: tmp
+    - name: docker-containers
+    - name: var-run
