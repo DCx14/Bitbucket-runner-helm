@@ -6,6 +6,14 @@ metadata:
   labels:
     app: bitbucket-runner
 spec:
+  initContainers:
+    - name: set-permissions
+      image: busybox
+      command: ["chmod", "+x", "/opt/atlassian/pipelines/runner/entrypoint.sh"]
+      volumeMounts:
+        - name: entrypoint
+          mountPath: /opt/atlassian/pipelines/runner/entrypoint.sh
+          subPath: entrypoint.sh
   containers:
     - name: bitbucket-runner
       image: {{ .Values.dockerImage.runner | quote }}
@@ -53,4 +61,5 @@ spec:
         items:
           - key: entrypoint.sh
             path: entrypoint.sh
+
 {{- end }}
