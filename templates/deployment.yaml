@@ -43,7 +43,7 @@ spec:
         - name: runner-workdir
           mountPath: {{ .Values.runner.workingDirectory | quote }}
         - name: entrypoint
-          mountPath: /tmp/entrypoint.sh
+          mountPath: /opt/atlassian/pipelines/runner/entrypoint.sh
           subPath: entrypoint.sh
           readOnly: false
   volumes:
