@@ -9,7 +9,7 @@ spec:
   containers:
     - name: bitbucket-runner
       image: {{ .Values.dockerImage.runner | quote }}
-      command: ["/bin/sh", "-c", "whoami && ls -l /tmp &&  cd /opt/atlassian/pipelines/runner/entrypoint.sh && pwd && ./entrypoint.sh"]
+      command: ["/bin/sh", "-c", "whoami && ls -l /tmp &&  cd /opt/atlassian/pipelines/runner/ && pwd && ./entrypoint.sh"]
       securityContext:
         runAsUser: 0  # Exécution en tant que root
         allowPrivilegeEscalation: true
