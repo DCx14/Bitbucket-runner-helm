@@ -39,8 +39,8 @@ spec:
                 secretKeyRef:
                   name: runner-oauth-credentials
                   key: oauthClientSecret
-                 - name: WORKING_DIRECTORY
-                   value: {{ .Values.runner.workingDirectory | quote }}
+            #     - name: WORKING_DIRECTORY
+            #       value: {{ .Values.runner.workingDirectory | quote }}
           resources:
             requests:
               memory: "256Mi"
