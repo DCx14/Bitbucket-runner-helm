@@ -26,3 +26,4 @@ data:
       -Dlogback.configurationFile=$LOGBACK_CONFIGURATION_FILE \\
       -Dbitbucket.pipelines.runner.s3.read.timeout.seconds=$S3_READ_TIMEOUT_SECONDS \\
       /opt/atlassian/pipelines/runner/bin/runner.jar
+{{- end }}
