@@ -9,8 +9,8 @@ data:
   entrypoint.sh: |
     #!/bin/sh
 
-    java \\
-      -jar \\
+    java \
+      -jar \
       -Dbitbucket.pipelines.runner.account.uuid=$ACCOUNT_UUID \
       -Dbitbucket.pipelines.runner.repository.uuid=$REPOSITORY_UUID \
       -Dbitbucket.pipelines.runner.uuid=$RUNNER_UUID \
