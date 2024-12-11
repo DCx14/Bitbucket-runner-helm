@@ -3,12 +3,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: entrypoint.sh
-  namespace: default
   labels:
     app: runner-script
-
 data:
-  runner-script.sh: |
+  entrypoint.sh: |
     #!/bin/sh
 
     java \\
