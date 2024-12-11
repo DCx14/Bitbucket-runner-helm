@@ -8,7 +8,6 @@ metadata:
 data:
   entrypoint.sh: |
     #!/bin/sh
-
     java \
       -jar \
       -Dbitbucket.pipelines.runner.account.uuid=$ACCOUNT_UUID \

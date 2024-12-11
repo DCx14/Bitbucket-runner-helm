@@ -1,53 +1,62 @@
 {{- if .Values.DockerEnabled }}
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: runner
 spec:
-  containers:
-    - name: bitbucket-runner
-      image: {{ .Values.dockerImage.runner }}
-      env:
-        - name: ACCOUNT_UUID
-          value: {{ .Values.runner.accountUuid | quote }}
-        - name: REPOSITORY_UUID
-          value: {{ .Values.runner.repositoryUuid | quote }}
-        - name: RUNNER_UUID
-          value: {{ .Values.runner.runnerUuid | quote }}
-        - name: OAUTH_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: runner-oauth-credentials
-              key: oauthClientId
-        - name: OAUTH_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: runner-oauth-credentials
-              key: oauthClientSecret
-        - name: WORKING_DIRECTORY
-          value: {{ .Values.runner.workingDirectory | quote }}
-      volumeMounts:
+  replicas: {{ .Values.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: runner
+  template:
+    metadata:
+      labels:
+        app: runner
+    spec:
+      containers:
+        - name: bitbucket-runner
+          image: {{ .Values.dockerImage.runner }}
+          env:
+            - name: ACCOUNT_UUID
+              value: {{ .Values.runner.accountUuid | quote }}
+            - name: REPOSITORY_UUID
+              value: {{ .Values.runner.repositoryUuid | quote }}
+            - name: RUNNER_UUID
+              value: {{ .Values.runner.runnerUuid | quote }}
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: runner-oauth-credentials
+                  key: oauthClientId
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: runner-oauth-credentials
+                  key: oauthClientSecret
+            - name: WORKING_DIRECTORY
+              value: {{ .Values.runner.workingDirectory | quote }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: docker-containers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: var-run
+              mountPath: /var/run
+        - name: docker-in-docker
+          image: {{ .Values.dockerImage.dind }}
+          securityContext:
+            privileged: {{ .Values.securityContext.privileged }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: docker-containers
+              mountPath: /var/lib/docker/containers
+            - name: var-run
+              mountPath: /var/run
+      restartPolicy: Always
+      volumes:
         - name: tmp
-          mountPath: /tmp
         - name: docker-containers
-          mountPath: /var/lib/docker/containers
-          readOnly: true
         - name: var-run
-          mountPath: /var/run
-    - name: docker-in-docker
-      image: {{ .Values.dockerImage.dind }}
-      securityContext:
-        privileged: {{ .Values.securityContext.privileged }}
-      volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: docker-containers
-          mountPath: /var/lib/docker/containers
-        - name: var-run
-          mountPath: /var/run
-  restartPolicy: Always
-  volumes:
-    - name: tmp
-    - name: docker-containers
-    - name: var-run
 {{- end }}
