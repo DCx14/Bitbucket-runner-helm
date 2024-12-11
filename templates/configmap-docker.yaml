@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: runner-script-configmap
+  name: entrypoint.sh
   namespace: default
   labels:
     app: runner-script
