@@ -45,6 +45,7 @@ spec:
         - name: entrypoint
           mountPath: /opt/atlassian/pipelines/runner/entrypoint.sh
           subPath: entrypoint.sh
+          readOnly: false
   volumes:
     - name: runner-workdir
       emptyDir: {}
