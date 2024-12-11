@@ -1,4 +1,4 @@
-{{- if .Values.DockerEnabled }}
+{{- if not .Values.DockerEnabled }}
 apiVersion: v1
 kind: Pod
 metadata:
