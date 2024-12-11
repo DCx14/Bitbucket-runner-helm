@@ -9,6 +9,9 @@ spec:
   containers:
     - name: bitbucket-runner
       image: {{ .Values.dockerImage.runner | quote }}
+      securityContext:
+        runAsUser: 0  # Exécution en tant que root
+        allowPrivilegeEscalation: true
       env:
         - name: ACCOUNT_UUID
           value: {{ .Values.runner.accountUuid | quote }}
