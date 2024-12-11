@@ -5,14 +5,14 @@
 replicaCount: 1
 
 secret:
-  oauthClientId: "your-base64-encoded-oauth-client-id"
-  oauthClientSecret: "your-base64-encoded-oauth-client-secret"
+  oauthClientId: "your-oauth-client-id"
+  oauthClientSecret: "your-oauth-client-secret"
 
 runner:
   accountUuid: "your-account-uuid"
   repositoryUuid: "your-repository-uuid"
   runnerUuid: "your-runner-uuid"
-  workingDirectory: "/tmp"
+#  workingDirectory: "/tmp"
 
 dockerImage:
   runner: "docker-public.packages.atlassian.com/sox/atlassian/bitbucket-pipelines-runner"

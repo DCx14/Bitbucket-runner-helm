@@ -16,6 +16,10 @@ spec:
       containers:
         - name: bitbucket-runner
           image: {{ .Values.dockerImage.runner }}
+          command: ["/bin/sh",  "/opt/atlassian/pipelines/runner/entrypoint.sh"]
+          securityContext:
+            runAsUser: 0  # Exécution en tant que root
+            allowPrivilegeEscalation: true
           env:
             - name: ACCOUNT_UUID
               value: {{ .Values.runner.accountUuid | quote }}
@@ -43,6 +47,10 @@ spec:
               readOnly: true
             - name: var-run
               mountPath: /var/run
+            - name: entrypoint
+              mountPath: /opt/atlassian/pipelines/runner/entrypoint.sh
+              subPath: entrypoint.sh
+              readOnly: false
         - name: docker-in-docker
           image: {{ .Values.dockerImage.dind }}
           securityContext:
@@ -59,4 +67,10 @@ spec:
         - name: tmp
         - name: docker-containers
         - name: var-run
+        - name: entrypoint
+          configMap:
+            name: entrypoint.sh
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
 {{- end }}
