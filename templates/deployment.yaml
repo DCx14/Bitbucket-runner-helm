@@ -6,17 +6,10 @@ metadata:
   labels:
     app: bitbucket-runner
 spec:
-  initContainers:
-    - name: set-permissions
-      image: busybox
-      command: ["chmod", "+x", "/opt/atlassian/pipelines/runner/entrypoint.sh"]
-      volumeMounts:
-        - name: entrypoint
-          mountPath: /opt/atlassian/pipelines/runner/entrypoint.sh
-          subPath: entrypoint.sh
   containers:
     - name: bitbucket-runner
       image: {{ .Values.dockerImage.runner | quote }}
+      command: ["/bin/sh", "-c", "chmod +x /opt/atlassian/pipelines/runner/entrypoint.sh && /opt/atlassian/pipelines/runner/entrypoint.sh"]
       securityContext:
         runAsUser: 0  # Exécution en tant que root
         allowPrivilegeEscalation: true
@@ -61,5 +54,4 @@ spec:
         items:
           - key: entrypoint.sh
             path: entrypoint.sh
-
 {{- end }}
