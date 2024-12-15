@@ -17,6 +17,7 @@ data:
       -Dbitbucket.pipelines.runner.oauth.client.id=$OAUTH_CLIENT_ID \
       -Dbitbucket.pipelines.runner.oauth.client.secret=$OAUTH_CLIENT_SECRET \
       -Dbitbucket.pipelines.runner.directory.working=$WORKING_DIRECTORY \
+      -Dbitbucket.pipelines.runner.runtime=macos-bash \
       -Dbitbucket.pipelines.runner.scheduled.state.update.initial.delay.seconds=$SCHEDULED_STATE_UPDATE_INITIAL_DELAY_SECONDS \
       -Dbitbucket.pipelines.runner.scheduled.state.update.period.seconds=$SCHEDULED_STATE_UPDATE_PERIOD_SECONDS \
       -Dbitbucket.pipelines.runner.secret.provider.uri=$SECRET_PROVIDER_URI \
