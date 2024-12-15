@@ -15,7 +15,8 @@ runner:
 #  workingDirectory: "/tmp"
 
 dockerImage:
-  runner: "docker-public.packages.atlassian.com/sox/atlassian/bitbucket-pipelines-runner"
+#  runner: "docker-public.packages.atlassian.com/sox/atlassian/bitbucket-pipelines-runner"
+  runner: 42069789/bitbucket-runner:latest
   dind: "docker:20.10.5-dind"
 
 securityContext:
